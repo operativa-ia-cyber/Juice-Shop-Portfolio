@@ -1,0 +1,4 @@
+# Nmap 7.991 scan initiated Sat Oct 31 07:19:28 2026 as: /usr/lib/nmap/nmap --privileged -sV -p 3000 --reason -oA scans/service-validation-3000 127.0.0.1
+Host: 127.0.0.1 (localhost)	Status: Up
+Host: 127.0.0.1 (localhost)	Ports: 3000/open/tcp//ppp?///
+# Nmap done at Sat Oct 31 07:19:39 2026 -- 1 IP address (1 host up) scanned in 11.60 seconds

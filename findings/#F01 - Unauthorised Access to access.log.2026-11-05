@@ -49,13 +49,20 @@ log was accessible to an unauthorised user.
 
 1. Navigate to the publicly accessible http://localhost:3000/ftp/ directory.
 
-2. Observe the file named `incident-support.kdbx`.
+screen
 
-3. Based on this filename, use `ffuf` to enumerate resources under the candidate
-   `/support/` path:
+2. Observe the file named 'incident-support.kdbx'.
+
+screen
+
+3. Based on this filename, use ffuf to enumerate resources under the candidate
+   '/support/' path:
 
  screen
+
 4. 2 logs directory founded, one of them lead to the log file: access.log.2026-11-05
+
+screen
 
 ---
 
@@ -63,9 +70,9 @@ log was accessible to an unauthorised user.
 
 The screenshots included in the discovery and reproduction sections demonstrate:
 
-- the `incident-support.kdbx` file exposed in `/ftp/`;
-- ffuf identifying the `/support/logs` directory; and
-- unauthenticated access to the `access.log` file.
+- the 'incident-support.kdbx' file exposed in '/ftp/';
+- ffuf identifying the '/support/logs' directory; and
+- unauthenticated access to the 'access.log' file.
 
 ---
 
@@ -77,7 +84,7 @@ timestamps, response status codes, internal network information, and browser
 user-agent details. This information may help an attacker map the application's
 attack surface.
 
-**Integrity and availability:** Not assessed; the scope of this finding was
+**Integrity and availability:** Not assessed. The scope of this finding was
 limited to unauthorised read access to the log file.
 
 **Affected users/data:** The log may contain information about users' requests
@@ -88,32 +95,32 @@ data, or sensitive URLs, the impact would be higher.
 
 ## Remediation
 
-1. Remove `access.log` and all operational log files from web-accessible
+1. Remove 'access.log`' and all operational log files from web-accessible
    directories. Store logs outside the application’s public web root and do not
-   expose them through `/support/logs`.
+   expose them through '/support/logs'.
 
 2. If authorised staff must view logs through the application, enforce
    server-side authentication and role-based authorization. Access should be
    denied by default to unauthenticated users.
 
 3. Disable directory listings for sensitive paths and add a regression test
-   confirming that unauthenticated requests to `/support/logs` and log files
-   receive `403 Forbidden` or `404 Not Found`. Monitor and alert on attempted
+   confirming that unauthenticated requests to '/support/logs' and log files
+   receive '403 Forbidden' or '404 Not Found'. Monitor and alert on attempted
    unauthorized access to log resources.
 
 ---
 
 ## References
 
-- [OWASP Top 10:2025 A01 — Broken Access Control](https://top10.owasp.org/2025/A01_2025-Broken_Access_Control/)
-- [CWE-552 — Files or Directories Accessible to External Parties](https://cwe.mitre.org/data/definitions/552.html)
-- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- OWASP Top 10:2025 A01 - Broken Access Control: https://top10.owasp.org/2025/A01_2025-Broken_Access_Control
+- CWE-552 — Files or Directories Accessible to External Parties: https://cwe.mitre.org/data/definitions/552.html
+- OWASP Logging Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
 
 ---
 
 ##Learning outcomes
 
-- Practiced web-content discovery with `ffuf` in an authorized lab environment.
+- Practiced web-content discovery with 'ffuf' in an authorized lab environment.
 - Learned to use contextual clues, such as filenames, to form and test route hypotheses.
 - Validated unauthenticated access to a sensitive application resource.
 - Documented the finding with evidence, impact, remediation, and recognized security classifications.

@@ -1,6 +1,7 @@
 #F01 - Unauthorised Access to access.log.2026-11-05
 
 ##Summary
+
 I identified that the web-accessible 'access.log' file could be retrieved
 without authentication or authorization.
 The exposed 'access.log' file disclosed HTTP request metadata, including request
@@ -13,22 +14,27 @@ reconnaissance.
 ---
 
 ##Severity
+
 Not required
 
 ---
 
 ##Affected component
+
 Publicly accessible access.log.2026-11-05 file (http://localhost:3000/support/logs)  
 
 ---
 
 ##Classification
+
 OWASP Top 10:2025 A01 — Broken Access Control
+
 CWE-552 — Files or Directories Accessible to External Parties
 
 ---
 
 ##Discovery
+
 While reviewing the **About Us** page (localhost:3000/#/about), I followed a legal-policy link and observed
 that it was hosted under the /ftp/ directory (localhost:3000/ftp/legal.md).
 Within that directory, I noticed a file named 'incident-support.kdbx',

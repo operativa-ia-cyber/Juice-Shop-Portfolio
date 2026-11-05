@@ -122,7 +122,6 @@ data, or sensitive URLs, the impact would be higher.
 
 - OWASP Top 10:2025 A01 - Broken Access Control: https://top10.owasp.org/2025/A01_2025-Broken_Access_Control
 - CWE-552 — Files or Directories Accessible to External Parties: https://cwe.mitre.org/data/definitions/552.html
-- OWASP Logging Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
 
 ---
 

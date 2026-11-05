@@ -1,9 +1,0 @@
-# Nmap 7.991 scan initiated Fri Oct 30 21:45:29 2026 as: /usr/lib/nmap/nmap --privileged -p 3000,3001 --reason -oA scans/baseline-localhost 127.0.0.1
-Nmap scan report for localhost (127.0.0.1)
-Host is up, received localhost-response (0.000087s latency).
-
-PORT     STATE  SERVICE REASON
-3000/tcp open   ppp     syn-ack ttl 64
-3001/tcp closed nessus  reset ttl 64
-
-# Nmap done at Fri Oct 30 21:45:29 2026 -- 1 IP address (1 host up) scanned in 0.04 seconds

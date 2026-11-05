@@ -16,26 +16,23 @@ This information could help an
 unauthorized user enumerate application routes and support further
 reconnaissance.
 
- Severity
-Pending review
-The severity will be determined after reviewing the exposed `access.log` file
-for authentication tokens, credentials, personal data, or other sensitive
-information.
+##Severity
+Not required
 
-~~(No credentials, session tokens, or direct personal data were identified in the~~
-~~reviewed log entries.)~~
-
-**Severity:** Pending review  
-**Affected component:** Publicly accessible access.log.2026-11-05 file (http://localhost:3000/support/logs)  
-**Classification:** OWASP Top 10:2025 A01 — Broken Access Control; CWE-552 — Files or Directories Accessible to External Parties
+Severity: Not required
+Affected component: Publicly accessible access.log.2026-11-05 file (http://localhost:3000/support/logs)  
+Classification: OWASP Top 10:2025 A01 — Broken Access Control; CWE-552 — Files or Directories Accessible to External Parties
 
 ---
 
-## Discovery
+##Discovery
 
-While reviewing the **About Us** page (localhost:3000/#/about) , I followed a legal-policy link and
-observed that it was hosted under the /ftp/ directory (localhost:3000/ftp/legal.md) . Within that directory, I noticed a file named `incident-support.kdbx`, which indicated that the
-application may contain support-related resources.
+While reviewing the **About Us** page (localhost:3000/#/about), I followed a legal-policy link and observed
+that it was hosted under the /ftp/ directory (localhost:3000/ftp/legal.md).
+Within that directory, I noticed a file named 'incident-support.kdbx',
+which indicated that the application may contain support-related resources.
+
+![About Us page](../images/about_us_page.png)
 
 As part of the authorised assessment, I used `ffuf` to enumerate directories
 from the application root and identified a `/support/` directory. I then used

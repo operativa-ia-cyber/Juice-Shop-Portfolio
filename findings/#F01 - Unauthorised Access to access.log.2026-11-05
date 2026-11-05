@@ -6,43 +6,42 @@ without authentication or authorization.
 The exposed 'access.log' file disclosed HTTP request metadata, including request
 timestamps, requested paths, response status codes, the requester’s internal
 Docker-network address, and browser user-agent information.
-
-For example, the log revealed non-obvious JavaScript resource
-/cbbc1/thereIsNoWayThat-You-CanBeThere.js. 
-
-screen
-
 This information could help an
 unauthorized user enumerate application routes and support further
 reconnaissance.
 
+---
+
 ##Severity
 Not required
 
-Severity: Not required
-Affected component: Publicly accessible access.log.2026-11-05 file (http://localhost:3000/support/logs)  
-Classification: OWASP Top 10:2025 A01 — Broken Access Control; CWE-552 — Files or Directories Accessible to External Parties
+---
+
+##Affected component
+Publicly accessible access.log.2026-11-05 file (http://localhost:3000/support/logs)  
+
+---
+
+##Classification
+OWASP Top 10:2025 A01 — Broken Access Control; CWE-552 — Files or Directories Accessible to External Parties
 
 ---
 
 ##Discovery
-
 While reviewing the **About Us** page (localhost:3000/#/about), I followed a legal-policy link and observed
 that it was hosted under the /ftp/ directory (localhost:3000/ftp/legal.md).
 Within that directory, I noticed a file named 'incident-support.kdbx',
 which indicated that the application may contain support-related resources.
 
 ![About Us page](../images/about_us_page.png)
+legal policy image
 
-As part of the authorised assessment, I used `ffuf` to enumerate directories
-from the application root and identified a `/support/` directory. I then used
-`ffuf` to enumerate resources within `/support/` and identified a log-file
-resource.
+As part of the authorised assessment, I used 'ffuf' to enumerate directories
+from the application root and identified a '/support/logs' directory. 
 
 Accessing the discovered resource without authentication returned the
-`access.log` file. The file exposed HTTP request metadata, confirming that the
+'access.log' file. The file exposed HTTP request metadata, confirming that the
 log was accessible to an unauthorised user.
-
 
 ---
 
@@ -57,6 +56,8 @@ log was accessible to an unauthorised user.
 
  screen
 4. 2 logs directory founded, one of them lead to the log file: access.log.2026-11-05
+
+---
 
 ## Evidence
 
@@ -108,10 +109,11 @@ data, or sensitive URLs, the impact would be higher.
 - [CWE-552 — Files or Directories Accessible to External Parties](https://cwe.mitre.org/data/definitions/552.html)
 - [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
 
-Learning outcomes
+---
+
+##Learning outcomes
 
 - Practiced web-content discovery with `ffuf` in an authorized lab environment.
 - Learned to use contextual clues, such as filenames, to form and test route hypotheses.
 - Validated unauthenticated access to a sensitive application resource.
 - Documented the finding with evidence, impact, remediation, and recognized security classifications.
-- 

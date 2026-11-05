@@ -32,6 +32,6 @@ validation, risk assessment, and remediation reporting.
 
 ```text
 .
-├── scans/       # Sanitised reconnaissance and scan outputs
+├── images/       # Images related to the findings
 ├── findings/    # Individual vulnerability reports
 └── README.md

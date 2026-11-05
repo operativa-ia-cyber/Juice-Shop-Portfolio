@@ -23,7 +23,8 @@ Publicly accessible access.log.2026-11-05 file (http://localhost:3000/support/lo
 ---
 
 ##Classification
-OWASP Top 10:2025 A01 — Broken Access Control; CWE-552 — Files or Directories Accessible to External Parties
+OWASP Top 10:2025 A01 — Broken Access Control
+CWE-552 — Files or Directories Accessible to External Parties
 
 ---
 
@@ -33,8 +34,9 @@ that it was hosted under the /ftp/ directory (localhost:3000/ftp/legal.md).
 Within that directory, I noticed a file named 'incident-support.kdbx',
 which indicated that the application may contain support-related resources.
 
-![About Us page](../images/about_us_page.png)
-legal policy image
+![About Us Page](../images/about_us_page.png)
+
+![Legal Policy Page](../images/legal_policy_page.png)
 
 As part of the authorised assessment, I used 'ffuf' to enumerate directories
 from the application root and identified a '/support/logs' directory. 
@@ -49,20 +51,20 @@ log was accessible to an unauthorised user.
 
 1. Navigate to the publicly accessible http://localhost:3000/ftp/ directory.
 
-screen
+![FTP directory](../images/ftp_directory.png)
 
 2. Observe the file named 'incident-support.kdbx'.
 
-screen
+(see the image above)
 
 3. Based on this filename, use ffuf to enumerate resources under the candidate
    '/support/' path:
 
- screen
+![Ffuff_enumeration](../images/ffuf_enumeration.png)
 
 4. 2 logs directory founded, one of them lead to the log file: access.log.2026-11-05
 
-screen
+(see the image above)
 
 ---
 

@@ -70,7 +70,7 @@ log was accessible to an unauthorised user.
 
 4. 2 logs directory founded, one of them lead to the log file: access.log.2026-11-05
 
-(see the image above)
+![Logs Directory](../images/logs_directory.png)
 
 ---
 

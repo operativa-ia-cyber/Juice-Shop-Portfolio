@@ -40,9 +40,9 @@ that it was hosted under the /ftp/ directory (localhost:3000/ftp/legal.md).
 Within that directory, I noticed a file named 'incident-support.kdbx',
 which indicated that the application may contain support-related resources.
 
-![About Us Page](../images/about_us_page.png)
+![About Us Page](../images/F01/about_us_page.png)
 
-![Legal Policy Page](../images/legal_policy_page.png)
+![Legal Policy Page](../images/F01/legal_policy_page.png)
 
 As part of the authorised assessment, I used 'ffuf' to enumerate directories
 from the application root and identified a '/support/logs' directory. 
@@ -57,7 +57,7 @@ log was accessible to an unauthorised user.
 
 1. Navigate to the publicly accessible http://localhost:3000/ftp/ directory.
 
-![FTP directory](../images/ftp_directory.png)
+![FTP directory](../images/F01/ftp_directory.png)
 
 2. Observe the file named 'incident-support.kdbx'.
 
@@ -66,11 +66,11 @@ log was accessible to an unauthorised user.
 3. Based on this filename, use ffuf to enumerate resources under the candidate
    '/support/' path:
 
-![Ffuff_enumeration](../images/ffuf_enumeration.png)
+![Ffuff_enumeration](../images/F01/ffuf_enumeration.png)
 
 4. 2 logs directory founded, one of them lead to the log file: access.log.2026-11-05
 
-![Logs Directory](../images/logs_directory.png)
+![Logs Directory](../images/F01/logs_directory.png)
 
 ---
 

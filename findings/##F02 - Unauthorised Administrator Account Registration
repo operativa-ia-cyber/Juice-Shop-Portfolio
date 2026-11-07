@@ -1,0 +1,139 @@
+##F02 - Unauthorised Administrator Account Registration
+
+## Summary
+
+I identified a broken access-control issue in the application's registration
+endpoint, 'POST /api/Users'. An unauthenticated user can supply a privileged
+role value in the registration request. When the request body includes
+"role": "admin", the application returns
+'201 Created' and creates an account with administrator privileges.
+
+The application appears to trust a client-controlled role field instead of
+assigning the default role on the server. The issue was validated in an
+authorised lab environment by signing in with the newly created account and
+confirming administrator access.
+
+**Severity:**
+
+High  
+
+**Affected component:**
+
+Registration endpoint: POST /api/Users
+
+**Classification:**
+
+OWASP Top 10:2025 A01 - Broken Access Control
+CWE-266 - Incorrect Privilege Assignment
+
+---
+
+## Discovery
+
+During testing of the registration workflow, I intercepted the account-creation
+request with Burp Suite. The HTTP response indicated that newly created
+accounts used the "role":"customer" role. This suggested that the role was included in
+the client-server registration flow.
+
+picture
+
+I then created a new test account and changed the JSON role property
+from the standard customer value to 'admin'. The endpoint accepted the request
+and returned '201 Created'. Authentication with the resulting account confirmed
+that it was able to access administrator functionality.
+
+picture
+picture
+
+
+---
+
+## Steps to Reproduce
+
+1. In an authorised test environment, open the application's registration page.
+2. Configure the browser to proxy traffic through Burp Suite and enable
+   interception.
+3. Submit a registration form using a new test identity.
+4. Locate the intercepted 'POST /api/Users' request.
+
+picture
+
+5. In the JSON object, replace the ordinary role value with the
+   following property: "role": "admin"
+(it must not be placed inside 'securityQuestion' as it does not modify the account role (was an error I made)
+
+picture
+
+6. Forward the modified request.
+7. Observe that the server responds with '201 Created'.
+
+picture
+
+8. Sign in using the newly created test account and verify that administrator
+   functionality is available (do not forget to turn of the proxy interception)
+
+picture
+
+
+
+---
+
+## Evidence
+
+- Intercepted registration request: 'POST /api/Users'
+- Observed ordinary registration role: 'customer'
+- Modified top-level request property: "role": "admin"
+- Server response after modification: '201 Created'
+- Validation: the created account successfully authenticated with administrator
+  access
+
+
+---
+
+## Impact
+
+An unauthenticated attacker can create an administrator account without an
+existing privileged account or approval workflow. This bypasses the intended
+registration and authorisation controls.
+
+The precise business impact depends on the actions available to administrators,
+but could include viewing or changing sensitive data, managing users and roles,
+altering application configuration, and using administrative features to
+affect other users. Because exploitation is remote, straightforward, and does
+not require credentials, this finding is rated High.
+
+---
+
+## Remediation
+
+1. The registration API should only accept the information neede to create a normal user account, such as name, email, and password. 
+  It must not allow users to choose a role. The server should always assign new accounts the customer role automatically.
+2. Assign a fixed least-privileged default role (for example, 'customer') on the server, independently of all client input.
+3. Restrict administrator-account creation and role changes to a protected server-side administrative workflow.
+Enforce authorisation checks on every endpoint that can assign or modify roles.
+4. Use allow-list DTOs or schema validation so unexpected fields are rejected rather than silently accepted. Log and alert on attempted
+privileged-role assignments through public endpoints.
+5. Add automated regression tests confirming that anonymous requests to 'POST /api/Users' cannot create any role other than the server-assigned
+   default, including when `role`, `isAdmin`, or equivalent fields are supplied.
+6. Review existing accounts and audit logs for unexpected administrator
+   accounts created through registration. Revoke or remediate unauthorised
+   access as appropriate.
+
+---
+
+## References
+
+- [OWASP Top 10:2025 A01 — Broken Access Control](https://top10.owasp.org/2025/A01_2025-Broken_Access_Control/)
+- [CWE-269 — Improper Privilege Management](https://cwe.mitre.org/data/definitions/269.html)
+- [CWE-284 — Improper Access Control](https://cwe.mitre.org/data/definitions/284.html)
+- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
+
+---
+
+## Learning Outcomes
+
+- Validated a client-controlled privilege assignment issue in an authorised lab.
+- Used an intercepted registration request to test server-side authorisation.
+- Confirmed impact by authenticating with the created test account.
+- Documented a remediation focused on server-side role assignment and
+  regression testing.
